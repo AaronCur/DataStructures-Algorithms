@@ -1,0 +1,11 @@
+﻿  Source.cpp
+c:\users\gameuser\documents\lab sheet 1 question 1\lab sheet 1 question 1\source.cpp(32): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\gameuser\documents\lab sheet 1 question 1\lab sheet 1 question 1\source.cpp(7): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  c:\users\gameuser\documents\lab sheet 1 question 1\lab sheet 1 question 1\source.cpp(32): note: see reference to function template instantiation 'T scalarProduct<int>(std::array<int,3>,std::array<int,3>)' being compiled
+          with
+          [
+              T=int
+          ]
+c:\users\gameuser\documents\lab sheet 1 question 1\lab sheet 1 question 1\source.cpp(9): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+  Lab sheet 1 Question 1.vcxproj -> C:\Users\gameuser\Documents\Lab sheet 1 Question 1\Debug\Lab sheet 1 Question 1.exe
+  Lab sheet 1 Question 1.vcxproj -> C:\Users\gameuser\Documents\Lab sheet 1 Question 1\Debug\Lab sheet 1 Question 1.pdb (Partial PDB)
