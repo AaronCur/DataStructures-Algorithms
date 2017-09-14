@@ -1,0 +1,6 @@
+﻿  main.cpp
+  UnorderedArray.cpp
+  Generating Code...
+c:\users\gameuser\documents\lab sheet 1 q 2\lab sheet 1 q 2\unorderedarray.cpp(103): warning C4715: 'UnorderedArray<int>::search': not all control paths return a value
+  Lab sheet 1 q 2.vcxproj -> C:\Users\gameuser\Documents\Lab sheet 1 q 2\Debug\Lab sheet 1 q 2.exe
+  Lab sheet 1 q 2.vcxproj -> C:\Users\gameuser\Documents\Lab sheet 1 q 2\Debug\Lab sheet 1 q 2.pdb (Partial PDB)
