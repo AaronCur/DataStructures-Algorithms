@@ -1,0 +1,11 @@
+﻿  main.cpp
+c:\users\gameuser\documents\dslabs-aaroncur\labsheet1\question3\lab1 question 3\lab1 question 3\main.cpp(61): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\gameuser\documents\dslabs-aaroncur\labsheet1\question3\lab1 question 3\lab1 question 3\main.cpp(8): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  c:\users\gameuser\documents\dslabs-aaroncur\labsheet1\question3\lab1 question 3\lab1 question 3\main.cpp(61): note: see reference to function template instantiation 'T scalarProduct<int>(std::array<int,3>,std::array<int,3>)' being compiled
+          with
+          [
+              T=int
+          ]
+c:\users\gameuser\documents\dslabs-aaroncur\labsheet1\question3\lab1 question 3\lab1 question 3\main.cpp(10): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+  Lab1 Question 3.vcxproj -> C:\Users\gameuser\Documents\dslabs-AaronCur\LabSheet1\Question3\Lab1 Question 3\Debug\Lab1 Question 3.exe
+  Lab1 Question 3.vcxproj -> C:\Users\gameuser\Documents\dslabs-AaronCur\LabSheet1\Question3\Lab1 Question 3\Debug\Lab1 Question 3.pdb (Partial PDB)
