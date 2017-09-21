@@ -96,10 +96,11 @@ int UnorderedArray<T>::search(T val)
 	{
 		if (m_array[index] == val)
 		{
-			return index;
+			return index + 1;
 		}
-		else return -1;
+		
 	}
+	return -1;
 }
 template <typename T>
 bool UnorderedArray<T>::expand()
