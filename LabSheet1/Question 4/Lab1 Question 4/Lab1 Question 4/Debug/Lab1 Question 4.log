@@ -1,0 +1,13 @@
+﻿  UnorderedArray.cpp
+  main.cpp
+c:\college\dslabs-aaroncur\labsheet1\question 4\lab1 question 4\lab1 question 4\main.cpp(94): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\college\dslabs-aaroncur\labsheet1\question 4\lab1 question 4\lab1 question 4\main.cpp(11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  c:\college\dslabs-aaroncur\labsheet1\question 4\lab1 question 4\lab1 question 4\main.cpp(94): note: see reference to function template instantiation 'T scalarProduct<int>(std::array<int,3>,std::array<int,3>)' being compiled
+          with
+          [
+              T=int
+          ]
+c:\college\dslabs-aaroncur\labsheet1\question 4\lab1 question 4\lab1 question 4\main.cpp(13): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
+  Lab1 Question 4.vcxproj -> C:\College\dslabs-AaronCur\LabSheet1\Question 4\Lab1 Question 4\Debug\Lab1 Question 4.exe
+  Lab1 Question 4.vcxproj -> C:\College\dslabs-AaronCur\LabSheet1\Question 4\Lab1 Question 4\Debug\Lab1 Question 4.pdb (Partial PDB)
