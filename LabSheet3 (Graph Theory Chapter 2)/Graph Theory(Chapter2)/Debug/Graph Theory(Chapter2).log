@@ -1,0 +1,7 @@
+﻿  main.cpp
+c:\users\gameuser\documents\dslabs-aaroncur\graph theory(chapter2)\graph theory(chapter2)\graph.h(75): warning C4018: '<': signed/unsigned mismatch
+  c:\users\gameuser\documents\dslabs-aaroncur\graph theory(chapter2)\graph theory(chapter2)\graph.h(74): note: while compiling class template member function 'Graph<std::string,int>::~Graph(void)'
+  c:\users\gameuser\documents\dslabs-aaroncur\graph theory(chapter2)\graph theory(chapter2)\main.cpp(20): note: see reference to function template instantiation 'Graph<std::string,int>::~Graph(void)' being compiled
+  c:\users\gameuser\documents\dslabs-aaroncur\graph theory(chapter2)\graph theory(chapter2)\main.cpp(20): note: see reference to class template instantiation 'Graph<std::string,int>' being compiled
+  Graph Theory(Chapter2).vcxproj -> C:\Users\gameuser\Documents\dslabs-AaronCur\Graph Theory(Chapter2)\Debug\Graph Theory(Chapter2).exe
+  Graph Theory(Chapter2).vcxproj -> C:\Users\gameuser\Documents\dslabs-AaronCur\Graph Theory(Chapter2)\Debug\Graph Theory(Chapter2).pdb (Partial PDB)
