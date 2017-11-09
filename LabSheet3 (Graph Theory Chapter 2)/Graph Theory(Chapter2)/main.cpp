@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
     myfile.close();
 
 	// Now traverse the graph.
-	graph.breadthFirst( graph.nodeIndex(0), visit );
+	graph.adaptedBreadthFirst( graph.nodeIndex(0), graph.nodeIndex(5), visit);
 	//graph.adaptedBreadthFirst( graph.nodeIndex(0), graph.nodeIndex(15) );
 	//Node *goal = graph.nodeIndex(15);
 
