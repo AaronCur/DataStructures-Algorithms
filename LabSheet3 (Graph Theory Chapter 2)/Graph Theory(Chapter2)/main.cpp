@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <stack>
 
 #include "Graph.h"
 
@@ -38,9 +39,28 @@ int main(int argc, char *argv[]) {
     myfile.close();
 
 	// Now traverse the graph.
-	graph.adaptedBreadthFirst( graph.nodeIndex(0), graph.nodeIndex(5), visit);
+	Node *goal = graph.nodeIndex(10);
+	graph.adaptedBreadthFirst( graph.nodeIndex(0), goal, visit);
+	
 	//graph.adaptedBreadthFirst( graph.nodeIndex(0), graph.nodeIndex(15) );
 	//Node *goal = graph.nodeIndex(15);
+
+	//To find shortest path
+	stack<Node *> path;
+	auto temp = goal;
+	while (temp != nullptr)
+	{
+		path.push(temp);
+		temp = temp->previous();
+	}
+
+	while (path.size() !=0)
+	{
+		std::cout << "Path: " + path.top()->data() << std::endl;
+		path.pop();
+	}
+
+
 
 	system("PAUSE");
 	
