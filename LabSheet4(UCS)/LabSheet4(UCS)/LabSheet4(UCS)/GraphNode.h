@@ -51,7 +51,7 @@ public:
         return m_marked;
     }
 
-    NodeType const & data() const {
+    NodeType & data() {
         return m_data;
     }
 

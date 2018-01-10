@@ -5,6 +5,7 @@
 #include <queue>
 #include <vector>
 #include <functional>
+#include <limits>
 
 using namespace std;
 
@@ -51,6 +52,7 @@ public:
     void depthFirst( Node* pNode, std::function<void(Node *)> f_visit);
     void breadthFirst( Node* pNode, std::function<void(Node *)> f_visit);
 	void adaptedBreadthFirst( Node* pCurrent, Node* pGoal );	
+	void ucs(Node* start, Node* dest, std::function<void(Node *)> f_visit,std::vector<Node *> & path);
 };
 
 // ----------------------------------------------------------------
@@ -336,10 +338,77 @@ void Graph<NodeType, ArcType>::adaptedBreadthFirst( Node* current, Node *goal ) 
 	}
 }
 
+// ----------------------------------------------------------------
+//  Name:           adaptedBreadthFirst
+//  Description:    Performs a breadth-first traversal the starting node
+//                  specified as an input parameter, terminating at the goal.
+//  Arguments:      The first parameter is the starting node.
+//                  The second parameter is the goal node.
+//  Return Value:   None.
+// ----------------------------------------------------------------
+template<class NodeType, class ArcType>
+void Graph<NodeType, ArcType>::ucs(Node* start, Node* dest, std::function<void(Node *)> f_visit, std::vector<Node *> & path) {
+	
+		auto compare = [](Node * n1, Node * n2) {
+			std::pair<std::string, int> p1 = n1->data();
+			std::pair<std::string, int> p2 = n2->data();
+			return p1.second > p2.second;
+		};
+
+		std::priority_queue<Node *, std::vector<Node * >, decltype(compare)> pq(compare);
+
+		for (int i = 0; i < m_nodes.size(); i++)
+		{
+			m_nodes[i]->data().second = std::numeric_limits<int>::max();
+
+
+		}
+
+		start->data().second = 0;
+		pq.push(start);
+		start->setMarked(true);
+		while (pq.size() != 0 && pq.top() != dest)
+		{
+			auto pqChild = pq.top()->arcList().begin();
+			auto pqEnd = pq.top()->arcList().end();
+			f_visit(pq.top());
+
+			for (; pqChild != pqEnd; pqChild++)
+			{
+				if ((*pqChild).node() != pq.top()->previous()) // dont go to previous node
+				{
+					auto distance = pq.top()->data().second + (*pqChild).weight();
+
+					if (distance < (*pqChild).node()->data().second)
+					{
+						(*pqChild).node()->data().second = distance;
+						(*pqChild).node()->setPrevious(pq.top());
+					}
+					if ((*pqChild).node()->marked() == false)
+					{
+						pq.push((*pqChild).node());
+						(*pqChild).node()->setMarked(true);
+					}
+				}
+			}
+
+			// dequeue the current node.
+			pq.pop();
+		}
+
+		Node * temp = dest;
+		while (temp != nullptr)
+		{
+			path.push_back(temp);
+			temp = temp->previous();
+
+		}
+	
+}
+
 
 
 #include "GraphNode.h"
 #include "GraphArc.h"
-
 
 #endif
