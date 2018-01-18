@@ -39,6 +39,7 @@ public:
     virtual Iterator & rightChild(Iterator & position) const;
 	virtual int depth(Iterator position) const;
 	virtual int depthNonRecursive(Iterator position) const;
+	Iterator treeMinimum(Iterator & n) const;
    
 	// Functions to return tree iterators
 	Iterator & begin();
@@ -155,6 +156,18 @@ int  LinkedBinaryTree<T, Iterator>::depthNonRecursive(Iterator position) const {
 		position = parent(position);
 	}
 	return depth;
+	
+
+}
+
+template <typename T, typename Iterator>
+inline  Iterator LinkedBinaryTree<T, Iterator>::treeMinimum(Iterator & n) const {
+
+	if (n.downLeft())
+	{
+		return(treeMinimum(n));
+	}
+	return n;
 	
 
 }

@@ -16,11 +16,18 @@ int main() {
 	 //Lab 6: Uncomment below to test your solution to depth()...
 	BinaryTreeIterator<int> iter = myTree.root();
 	
-	iter.downRight();
-	iter.downRight();
-	iter.downRight();
+	//iter.downRight();
+	//iter.downRight();
+	//iter.downRight();
 	
+	auto minimumVal = myTree.treeMinimum(iter);
+
+	
+	//std::cout << "Depth of node: " << *iter << " is " << myTree.depth( iter ) << std::endl;
+
 	std::cout << "Depth of node: " << *iter << " is " << myTree.depthNonRecursive( iter ) << std::endl;
+
+	std::cout << "Minimum Value: " << *minimumVal<< std::endl;
 	
 
 	system("PAUSE");
