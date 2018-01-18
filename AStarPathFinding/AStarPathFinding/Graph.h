@@ -53,6 +53,7 @@ public:
     void breadthFirst( Node* pNode, std::function<void(Node *)> f_visit);
 	void adaptedBreadthFirst( Node* pCurrent, Node* pGoal );	
 	void ucs(Node* start, Node* dest, std::function<void(Node *)> f_visit,std::vector<Node *> & path);
+	void aStar(Node* start, Node* dest, std::function<void(Node *)> f_visit,std::vector<Node *>& path);
 };
 
 // ----------------------------------------------------------------
@@ -404,6 +405,67 @@ void Graph<NodeType, ArcType>::ucs(Node* start, Node* dest, std::function<void(N
 
 		}
 	
+}
+
+template<class NodeType, class ArcType>
+void Graph<NodeType, ArcType>::aStar(Node* start, Node* dest, std::function<void(Node *)> f_visit, std::vector<Node *> & path) {
+
+	auto compare = [](Node * n1, Node * n2) {
+		std::pair<std::string, int> p1 = n1->data();
+		std::pair<std::string, int> p2 = n2->data();
+		return p1.second > p2.second;
+	};
+
+	std::priority_queue<Node *, std::vector<Node * >, decltype(compare)> pq(compare);
+	start->data().second = 0;
+
+	for (int i = 0; i < m_nodes.size(); i++)
+	{
+		//Calculateh[v]
+		m_nodes[i]->data().second = std::numeric_limits<int>::max();
+
+
+	}
+
+	pq.push(start);
+	start->setMarked(true);
+	while (pq.size() != 0 && pq.top() != dest)
+	{
+		auto pqChild = pq.top()->arcList().begin();
+		auto pqEnd = pq.top()->arcList().end();
+		f_visit(pq.top());
+
+		for (; pqChild != pqEnd; pqChild++)
+		{
+			if ((*pqChild).node() != pq.top()->previous() && /* AND c has not been removed from the pq)*/) // dont go to previous node
+			{
+				auto distance = /* h(c) + g(c)*/
+
+				if (distance < /*f(c)*/)
+				{
+					/*f[c]*/ = distance;
+					(*pqChild).node()->setPrevious(pq.top());
+				}
+				if ((*pqChild).node()->marked() == false)
+				{
+					pq.push((*pqChild).node());
+					(*pqChild).node()->setMarked(true);
+				}
+			}
+		}
+
+		// dequeue the current node.
+		pq.pop();
+	}
+
+	Node * temp = dest;
+	while (temp != nullptr)
+	{
+		path.push_back(temp);
+		temp = temp->previous();
+
+	}
+
 }
 
 
