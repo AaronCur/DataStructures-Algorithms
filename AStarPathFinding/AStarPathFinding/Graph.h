@@ -441,7 +441,7 @@ void Graph<NodeType, ArcType>::aStar(Node* start, Node* dest, std::function<void
 			{
 				auto distance = /* h(c) + g(c)*/
 
-				if (distance < /*f(c)*/)
+				if (distance < /*f(c)*/ )
 				{
 					/*f[c]*/ = distance;
 					(*pqChild).node()->setPrevious(pq.top());
@@ -453,7 +453,6 @@ void Graph<NodeType, ArcType>::aStar(Node* start, Node* dest, std::function<void
 				}
 			}
 		}
-
 		// dequeue the current node.
 		pq.pop();
 	}

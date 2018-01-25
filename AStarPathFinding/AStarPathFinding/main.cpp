@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
 	// pair<string, int> is the data we are storing at each node
 	// int is the arc type (the data stored at each edge or arc)
 
-	Graph<pair<string, int>, int > myGraph(6);
+	Graph<pair<string, int>, int > myGraph(30);
 	
 	//Graph<std::string, int> graph(25);
 
@@ -36,6 +36,8 @@ int main(int argc, char *argv[]) {
 	std::vector<Node *> path;
 
 	while (myfile >> NodeLabel) {
+
+		nodeMap[NodeLabel] = i;
 		myGraph.addNode(std::make_pair(NodeLabel, 0), i++);
 	}
 
@@ -45,8 +47,10 @@ int main(int argc, char *argv[]) {
 	int from, to, weight;
 	std::string s_from, s_to;
 	while (myfile >> s_from >> s_to >> weight) {
-		from = s_from.at(0) - 'A';
-		to = s_to.at(0) - 'A';
+		//from = s_from.at(0) - 'A';
+		//to = s_to.at(0) - 'A';
+		from = nodeMap[s_from];
+		to = nodeMap[s_to];
 		std::cout << s_from << "," << s_to << std::endl;
 		myGraph.addArc(from, to, weight);
 	}
