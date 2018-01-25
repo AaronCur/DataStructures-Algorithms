@@ -53,7 +53,8 @@ public:
     void breadthFirst( Node* pNode, std::function<void(Node *)> f_visit);
 	void adaptedBreadthFirst( Node* pCurrent, Node* pGoal );	
 	void ucs(Node* start, Node* dest, std::function<void(Node *)> f_visit,std::vector<Node *> & path);
-	void aStar(Node* start, Node* dest, std::function<void(Node *)> f_visit,std::vector<Node *>& path);
+	void aStar(Node* start, Node* dest, std::function<void(Node *)> f_visit,std::vector<Node *>& path);
+
 };
 
 // ----------------------------------------------------------------
@@ -383,7 +384,7 @@ void Graph<NodeType, ArcType>::ucs(Node* start, Node* dest, std::function<void(N
 					if (distance < (*pqChild).node()->data().second)
 					{
 						(*pqChild).node()->data().second = distance;
-						 m_heuritsic = distance * 0.9;
+						(*pqChild).node() ->m_heuristic = distance * 0.9;
 						(*pqChild).node()->setPrevious(pq.top());
 					}
 					if ((*pqChild).node()->marked() == false)
@@ -393,7 +394,6 @@ void Graph<NodeType, ArcType>::ucs(Node* start, Node* dest, std::function<void(N
 					}
 				}
 			}
-
 			// dequeue the current node.
 			pq.pop();
 		}
@@ -411,6 +411,8 @@ void Graph<NodeType, ArcType>::ucs(Node* start, Node* dest, std::function<void(N
 template<class NodeType, class ArcType>
 void Graph<NodeType, ArcType>::aStar(Node* start, Node* dest, std::function<void(Node *)> f_visit, std::vector<Node *> & path) {
 
+	ucs(dest, start, f_visit, path);
+
 	auto compare = [](Node * n1, Node * n2) {
 		std::pair<std::string, int> p1 = n1->data();
 		std::pair<std::string, int> p2 = n2->data();
@@ -424,6 +426,7 @@ void Graph<NodeType, ArcType>::aStar(Node* start, Node* dest, std::function<void
 	{
 		//Calculateh h[v]
 		m_nodes[i]->data().second = std::numeric_limits<int>::max();
+		
 
 	}
 
@@ -437,13 +440,14 @@ void Graph<NodeType, ArcType>::aStar(Node* start, Node* dest, std::function<void
 
 		for (; pqChild != pqEnd; pqChild++)
 		{
-			if ((*pqChild).node() != pq.top()->previous() && /* AND c has not been removed from the pq)*/) // dont go to previous node
+			if ((*pqChild).node() != pq.top()->previous()) // dont go to previous node
 			{
-				auto distC = pq.top()->data().second + m_heuristic /* h(c) + g(c)*/
-
-				if (distC < (*pqChild).node()->data().second )
+				auto distC = pq.top()->data().second + (*pqChild).node()->m_heuristic + (*pqChild).weight(); /* h(c) + g(c)*/
+				//auto distC = (*pqChild).node()->data().second + (*pqChild).node()->m_heuristic;
+				
+				if (distC < (*pqChild).node()->data().second + (*pqChild).node()->m_heuristic)
 				{
-					(*pqChild).node()->data().second = distC
+					(*pqChild).node()->data().second = distC;
 					(*pqChild).node()->setPrevious(pq.top());
 				}
 				if ((*pqChild).node()->marked() == false)
@@ -457,13 +461,13 @@ void Graph<NodeType, ArcType>::aStar(Node* start, Node* dest, std::function<void
 		pq.pop();
 	}
 
-	Node * temp = dest;
+	/*Node * temp = dest;
 	while (temp != nullptr)
 	{
 		path.push_back(temp);
 		temp = temp->previous();
 
-	}
+	}*/
 
 }
 

@@ -14,7 +14,7 @@ typedef GraphArc<std::pair<std::string, int>,int> Arc;
 typedef GraphNode<std::pair<std::string, int>, int> Node;
 
 void NodeVisited(Node * node) {
-	cout << "Visiting: " << node->data().second << endl;
+	cout << "Visiting: " << node->data().first << endl;
 }
 
 int main(int argc, char *argv[]) {
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
 		myGraph.addArc(from, to, weight);
 	}
 
-	myGraph.ucs(myGraph.nodeIndex(4), myGraph.nodeIndex(2), NodeVisited, path);
+	myGraph.aStar(myGraph.nodeIndex(4), myGraph.nodeIndex(20), NodeVisited, path);
 
 	for (int i = 0; i < path.size(); i++)
 	{
