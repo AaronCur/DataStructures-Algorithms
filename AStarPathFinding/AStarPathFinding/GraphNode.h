@@ -75,6 +75,7 @@ public:
     Arc* getArc( Node* pNode );    
     void addArc( Node* pNode, ArcType pWeight );
     void removeArc( Node* pNode );
+	float m_heuristic;
 
 
 };

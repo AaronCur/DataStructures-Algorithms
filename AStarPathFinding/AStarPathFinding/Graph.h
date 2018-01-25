@@ -383,6 +383,7 @@ void Graph<NodeType, ArcType>::ucs(Node* start, Node* dest, std::function<void(N
 					if (distance < (*pqChild).node()->data().second)
 					{
 						(*pqChild).node()->data().second = distance;
+						 m_heuritsic = distance * 0.9;
 						(*pqChild).node()->setPrevious(pq.top());
 					}
 					if ((*pqChild).node()->marked() == false)
@@ -421,9 +422,8 @@ void Graph<NodeType, ArcType>::aStar(Node* start, Node* dest, std::function<void
 
 	for (int i = 0; i < m_nodes.size(); i++)
 	{
-		//Calculateh[v]
+		//Calculateh h[v]
 		m_nodes[i]->data().second = std::numeric_limits<int>::max();
-
 
 	}
 
@@ -439,11 +439,11 @@ void Graph<NodeType, ArcType>::aStar(Node* start, Node* dest, std::function<void
 		{
 			if ((*pqChild).node() != pq.top()->previous() && /* AND c has not been removed from the pq)*/) // dont go to previous node
 			{
-				auto distance = /* h(c) + g(c)*/
+				auto distC = pq.top()->data().second + m_heuristic /* h(c) + g(c)*/
 
-				if (distance < /*f(c)*/ )
+				if (distC < (*pqChild).node()->data().second )
 				{
-					/*f[c]*/ = distance;
+					(*pqChild).node()->data().second = distC
 					(*pqChild).node()->setPrevious(pq.top());
 				}
 				if ((*pqChild).node()->marked() == false)
