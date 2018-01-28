@@ -4,6 +4,7 @@
 #include <stack>
 #include <map>
 #include "Graph.h"
+#include "Nodeq2.h"
 #include <utility> // for STL pair
 using std::pair;
 
@@ -12,6 +13,10 @@ using namespace std;
 
 typedef GraphArc<std::pair<std::string, int>,int> Arc;
 typedef GraphNode<std::pair<std::string, int>, int> Node;
+
+class Nodeq2;
+
+Nodeq2 *m_nodeq2;
 
 void NodeVisited(Node * node) {
 	cout << "Visiting: " << node->data().first << endl;
@@ -29,13 +34,20 @@ int main(int argc, char *argv[]) {
 
 
 	std::string NodeLabel;
+	int posX;
+	int posY;
 	int i = 0;
 	ifstream myfile;
 	myfile.open("nodes.txt");
 	std::map<std::string, int>nodeMap;
 	std::vector<Node *> path;
+	//std::vector<Nodeq2 *> nodes;
 
-	while (myfile >> NodeLabel) {
+	m_nodeq2 = new Nodeq2(100, 100);
+
+	while (myfile >> NodeLabel >> posX >> posY) {
+
+		//nodes.push_back(new Node(posX, posY));
 
 		nodeMap[NodeLabel] = i;
 		myGraph.addNode(std::make_pair(NodeLabel, 0), i++);
@@ -55,7 +67,7 @@ int main(int argc, char *argv[]) {
 		myGraph.addArc(from, to, weight);
 	}
 
-	myGraph.aStar(myGraph.nodeIndex(4), myGraph.nodeIndex(20), NodeVisited, path);
+	//myGraph.aStar(myGraph.nodeIndex(4), myGraph.nodeIndex(20), NodeVisited, path);
 
 	for (int i = 0; i < path.size(); i++)
 	{
