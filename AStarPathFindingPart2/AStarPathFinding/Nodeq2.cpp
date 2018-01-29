@@ -50,7 +50,7 @@ void Nodeq2::render(sf::RenderWindow &window)
 		node.setFillColor(sf::Color::Red);
 	}
 	
-	node.setOutlineThickness(3);
+	node.setOutlineThickness(0);
 	node.setOutlineColor(sf::Color(170, 170, 170));
 	node.setPosition(m_position);
 	m_name.setPosition(m_position.x + 5, m_position.y + 2);

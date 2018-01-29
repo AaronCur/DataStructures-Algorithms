@@ -1,19 +1,19 @@
 #include "SFML/Audio.hpp"
 #include "Game.h"
 
-//static double const MS_PER_UPDATE = 10.0;
-//
-//using std::pair;
-//
-//using namespace std;
-//
-//
-//typedef GraphArc<std::pair<std::string, int>, int> Arc;
-//typedef GraphNode<std::pair<std::string, int>, int> Node;
+static double const MS_PER_UPDATE = 10.0;
+
+using std::pair;
+
+using namespace std;
+
+
+typedef GraphArc<std::pair<std::string, int>, int> Arc;
+typedef GraphNode<std::pair<std::string, int>, int> Node;
 
 
 Game::Game() :
-	m_window(sf::VideoMode(1920, 1080, 32), "AstarProject")
+	m_window(sf::VideoMode(1280, 720, 32), "AstarProject")
 {
 	if (!m_agentOrange.loadFromFile("./resources/images/AGENTORANGE.ttf"))
 	{
@@ -44,41 +44,43 @@ Game::Game() :
 	int i = 0;
 	ifstream myfile;
 	myfile.open("nodesQ2.txt");
-	std::map<std::string, int>nodeMap;
-	//std::vector<Node *> path;
+	std::vector<Node *> path;
+	
 
 	//m_nodeq2 = new Nodeq2(100, 100);
+	m_edge = new Edge(100, 100,100,100);
 
 	while (myfile >> NodeLabel >> posX >> posY) {
 
 		nodes.push_back(new Nodeq2(posX, posY,NodeLabel));
 
-		//nodeMap[NodeLabel] = i;
-		//myGraph.addNode(std::make_pair(NodeLabel, 0), i++);
+		nodeMap[NodeLabel] = i;
+		myGraph.addNode(std::make_pair(NodeLabel, 0), i++);
 	}
 
 	myfile.close();
-	//myfile.open("arcs.txt");
+	myfile.open("arcsQ2.txt");
 
-	//int from, to, weight;
-	//std::string s_from, s_to;
-	//while (myfile >> s_from >> s_to >> weight) {
-	//	//from = s_from.at(0) - 'A';
-	//	//to = s_to.at(0) - 'A';
-	//	from = nodeMap[s_from];
-	//	to = nodeMap[s_to];
-	//	std::cout << s_from << "," << s_to << std::endl;
-	//	myGraph.addArc(from, to, weight);
-	//}
+	int from, to, weight, linefromX, linefromY, linetoX, linetoY;
+	std::string s_from, s_to;
+	while (myfile >> s_from >> s_to >> weight >> linefromX >> linefromY >> linetoX >> linetoY) {
+		from = s_from.at(0) - 'A';
+		to = s_to.at(0) - 'A';
+		from = nodeMap[s_from];
+		to = nodeMap[s_to];
+		std::cout << s_from << "," << s_to << std::endl;
+		myGraph.addArc(from, to, weight);
+		edges.push_back(new Edge(linefromX, linefromY, linetoX, linetoY));
+	}
 
-	////myGraph.aStar(myGraph.nodeIndex(4), myGraph.nodeIndex(20), NodeVisited, path);
+	myGraph.aStar(myGraph.nodeIndex(4), myGraph.nodeIndex(20), NodeVisited, path);
 
-	///*for (int i = 0; i < path.size(); i++)
-	//{
-	//	std::cout << path[i]->data().first << std::endl;
-	//}*/
+	for (int i = 0; i < path.size(); i++)
+	{
+		std::cout << path[i]->data().first << std::endl;
+	}
 
-	//myfile.close();
+	myfile.close();
 
 	//system("PAUSE");
 		
@@ -158,7 +160,10 @@ void Game::update(sf::Time time)
 	{
 		nodes[i]->update(time);
 	}
-	
+	for (int i = 0; i < edges.size(); i++)
+	{
+		edges[i]->update(time);
+	}
 }
 
 
@@ -170,6 +175,11 @@ void Game::update(sf::Time time)
 void Game::render()
 {
 	m_window.clear(sf::Color::White);
+	
+	for (int i = 0; i < edges.size(); i++)
+	{
+		edges[i]->render(m_window);
+	}
 	for (int i = 0; i < nodes.size(); i++)
 	{
 		nodes[i]->render(m_window);

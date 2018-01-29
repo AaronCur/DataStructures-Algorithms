@@ -1,7 +1,7 @@
 #include "Edge.h"
-Edge::Edge(float x, float y) :
-	m_position(x, y),
-	m_radius(10.0f)
+Edge::Edge(float x1, float y1,float x2, float y2) :
+	m_position1(x1, y1),
+	m_position2(x2,y2)
 {
 	//if (!enemyTxt.loadFromFile("resources/images/enemy.png"))
 	//{
@@ -33,19 +33,23 @@ void Edge::render(sf::RenderWindow &window)
 
 	//window.draw(enemyRect);
 	sf::CircleShape node(m_radius);
+	line[0].position = m_position1;
+	line[1].position = m_position2;
 	if (highlight == false)
 	{
+		line[0].color = sf::Color(127,127,127);
+		line[1].color = sf::Color(127, 127, 127);
 
 	}
 	else
 	{
 		node.setFillColor(sf::Color::Red);
+		line[0].color = sf::Color::Red;
+		line[1].color = sf::Color::Red;
 	}
 
-	node.setOutlineThickness(3);
-	node.setOutlineColor(sf::Color(127, 127, 127));
-	node.setPosition(m_position);
-	window.draw(node);
+	window.draw(line,2,sf::Lines);
+
 
 
 }

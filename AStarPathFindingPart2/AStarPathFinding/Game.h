@@ -10,6 +10,7 @@
 #include <map>
 #include "Graph.h"
 #include "Nodeq2.h"
+#include "Edge.h"
 #include <utility> // for STL pair
 
 
@@ -43,8 +44,12 @@ protected:
 	sf::Font m_adventure;
 
 	Nodeq2 *m_nodeq2;
+	Edge *m_edge;
 
 	std::vector<Nodeq2 *> nodes;
+	std::vector<Edge *> edges;
+	std::map<std::string, int>nodeMap;
+	
 
 };
 
