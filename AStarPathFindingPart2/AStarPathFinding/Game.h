@@ -27,11 +27,11 @@ public:
 	Game();
 	~Game();
 	void run();
-
+	
 protected:
 	void update(sf::Time time);
 	void render();
-	void processEvents();
+	void runAstar();
 
 	void processGameEvents();
 	//void NodeVisited(Node * node);
@@ -46,9 +46,16 @@ protected:
 	Nodeq2 *m_nodeq2;
 	Edge *m_edge;
 
-	std::vector<Nodeq2 *> nodes;
+	sf::Vector2i m_mousePos;
+
+	//std::vector<Nodeq2 *> nodes;
 	std::vector<Edge *> edges;
+	std::vector<std::string> sdest;
 	std::map<std::string, int>nodeMap;
+
+	bool active = true;
+
+	
 	
 
 };

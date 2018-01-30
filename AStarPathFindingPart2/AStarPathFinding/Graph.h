@@ -416,6 +416,8 @@ void Graph<NodeType, ArcType>::aStar(Node* start, Node* dest, std::function<void
 	auto compare = [](Node * n1, Node * n2) {
 		std::pair<std::string, int> p1 = n1->data();
 		std::pair<std::string, int> p2 = n2->data();
+		p1.second = p1.second + n1->m_heuristic;
+		p2.second = p2.second + n2->m_heuristic;
 		return p1.second > p2.second;
 	};
 

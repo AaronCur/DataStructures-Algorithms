@@ -10,7 +10,10 @@ public:
 
 	float m_radius;
 	bool highlight = false;
-	void update(sf::Time t);
+	bool expand = false;
+	bool selected = false;
+	void update(sf::Time);
+	void mouseDetection(sf::Vector2i mousePos, std::vector<std::string> sdest);
 	void render(sf::RenderWindow &window);
 	sf::Vector2f m_position;
 	sf::CircleShape node;

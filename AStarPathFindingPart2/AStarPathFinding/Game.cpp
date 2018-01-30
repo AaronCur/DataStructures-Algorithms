@@ -1,5 +1,8 @@
 #include "SFML/Audio.hpp"
 #include "Game.h"
+Graph<pair<string, int>, int > myGraph(30);
+
+Graph<std::string, int> graph(25);
 
 static double const MS_PER_UPDATE = 10.0;
 
@@ -7,11 +10,30 @@ using std::pair;
 
 using namespace std;
 
+std::vector<Nodeq2 *> nodes;
+
+
+
 
 typedef GraphArc<std::pair<std::string, int>, int> Arc;
 typedef GraphNode<std::pair<std::string, int>, int> Node;
 
+void visit(Node * node) {
+	cout << "Visiting: " << node->data().first << endl;
+	std::string temp = node->data().first;
 
+	for (int i = 0; i < nodes.size(); i++)
+	{
+		std::string temp2 = nodes[i]->m_nameText;
+		if (temp2 == temp)
+		{
+			nodes[i]->expand = true;
+		}
+
+	}
+	
+
+}
 Game::Game() :
 	m_window(sf::VideoMode(1280, 720, 32), "AstarProject")
 {
@@ -33,10 +55,6 @@ Game::Game() :
 	// pair<string, int> is the data we are storing at each node
 	// int is the arc type (the data stored at each edge or arc)
 
-	Graph<pair<string, int>, int > myGraph(30);
-
-    Graph<std::string, int> graph(25);
-
 
 	std::string NodeLabel;
 	int posX;
@@ -44,7 +62,6 @@ Game::Game() :
 	int i = 0;
 	ifstream myfile;
 	myfile.open("nodesQ2.txt");
-	std::vector<Node *> path;
 	
 
 	//m_nodeq2 = new Nodeq2(100, 100);
@@ -73,13 +90,6 @@ Game::Game() :
 		edges.push_back(new Edge(linefromX, linefromY, linetoX, linetoY));
 	}
 
-	myGraph.aStar(myGraph.nodeIndex(4), myGraph.nodeIndex(20), NodeVisited, path);
-
-	for (int i = 0; i < path.size(); i++)
-	{
-		std::cout << path[i]->data().first << std::endl;
-	}
-
 	myfile.close();
 
 	//system("PAUSE");
@@ -91,7 +101,6 @@ Game::~Game()
 	
 }
 
-	
 /// <summary>
 /// Main game entry point - runs until user quits.
 /// </summary>
@@ -104,7 +113,7 @@ void Game::run()
 
 	while (m_window.isOpen())
 	{
-		processEvents();
+		//processEvents();
 		timeSinceLastUpdate += clock.restart();
 
 		while (timeSinceLastUpdate > timePerFrame)
@@ -125,27 +134,30 @@ void Game::run()
 /// Allows window to function and exit. 
 /// Events are passed on to the Game::processGameEvents() method
 /// </summary>
-void Game::processEvents()
+void Game::runAstar()
 {
-//	sf::Event event;
-//	while (m_window.pollEvent(event))
-	//{
-		//if (event.type == sf::Event::Closed)
-		//{
-			//m_window.close();
-		//}
-//		event.type == sf::Event::KeyPressed;
-		//To check for the Akeypress to transition from splash screen to main menu
-		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-		//{
-			//m_splashScreen->checkButtonPress();
-		//}
-	///	if (m_mainMenu->close)
-		//{
-		//	m_window.close();
-	//	}
-		///sf::Keyboard::isKeyPressed(sf::Keyboard::Return)
-	//}
+
+	std::vector<Node *> path;
+
+	myGraph.aStar(myGraph.nodeIndex(nodeMap[sdest[0]]), myGraph.nodeIndex(nodeMap[sdest[1]]), visit, path);
+
+	for (int i = 0; i < path.size(); i++)
+	{
+		std::cout << path[i]->data().first << std::endl;
+
+		std::string temp = path[i]->data().first;
+
+		for (int i = 0; i < nodes.size(); i++)
+		{
+			std::string temp2 = nodes[i]->m_nameText;
+			if (temp2 == temp)
+			{
+				nodes[i]->highlight = true;
+			}
+
+		}
+
+	}
 
 }
 
@@ -156,9 +168,26 @@ void Game::processEvents()
 /// <param name="time">update delta time</param>
 void Game::update(sf::Time time)
 {
+	if (sdest.size() == 2 && active == true)
+	{
+		runAstar();
+		active = false;
+	}
 	for (int i = 0; i < nodes.size(); i++)
 	{
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && nodes[i]->selected == false)
+		{
+			m_mousePos = sf::Mouse::getPosition(m_window);
+			nodes[i]->mouseDetection(m_mousePos, sdest);
+			if (nodes[i]->selected == true)
+			{
+				sdest.push_back(nodes[i]->m_nameText);
+			}
+			
+		}
+
 		nodes[i]->update(time);
+		
 	}
 	for (int i = 0; i < edges.size(); i++)
 	{
