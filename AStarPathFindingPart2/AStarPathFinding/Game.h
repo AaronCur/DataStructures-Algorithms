@@ -11,6 +11,7 @@
 #include "Graph.h"
 #include "Nodeq2.h"
 #include "Edge.h"
+#include "Button.h"
 #include <utility> // for STL pair
 
 
@@ -32,6 +33,7 @@ protected:
 	void update(sf::Time time);
 	void render();
 	void runAstar();
+	void resetAstar();
 
 	void processGameEvents();
 	//void NodeVisited(Node * node);
@@ -45,6 +47,7 @@ protected:
 
 	Nodeq2 *m_nodeq2;
 	Edge *m_edge;
+	Button *m_button;
 
 	sf::Vector2i m_mousePos;
 

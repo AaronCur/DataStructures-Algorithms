@@ -1,7 +1,10 @@
 #include "Button.h"
 #include <iostream>
 Button::Button() :
-	m_position(500, 500)
+	m_position(800, 250),
+	m_size(200,100),
+	m_button1("Start"),
+	m_button2("Reset")
 {
 	
 	if (!m_font.loadFromFile("c:/windows/fonts/Adventure.otf"))
@@ -10,7 +13,9 @@ Button::Button() :
 	}
 
 	m_name.setFont(m_font);
-	m_name.setCharacterSize(15);
+	m_name.setCharacterSize(40);
+
+	
 	
 	
 }
@@ -36,18 +41,27 @@ void Button::update(sf::Time t)
 		break;
 	}
 }
-void Button::mouseDetection(sf::Vector2i mousePos, std::vector<std::string> sdest)
+void Button::mouseDetection(sf::Vector2i mousePos)
 {
-	if (sdest.size() < 2)
-	{
+
 		if ((m_position.x < mousePos.x) &&
-			(m_position.x + m_radius > mousePos.x) &&
-			(m_position.y + m_radius > mousePos.y) &&
+			(m_position.x + m_size.x > mousePos.x) &&
+			(m_position.y + m_size.y > mousePos.y) &&
 			(m_position.y < mousePos.y))
 		{
-			selected = true;
+			if (m_buttonVal == 0 && selected == false)
+			{
+				m_buttonVal = 1;
+				selected = true;
+			}
+			else if(m_buttonVal == 1 && selected == false)
+			{
+				m_buttonVal = 0;
+				selected = true;
+			}
+
 		}
-	}
+	
 }
 
 
@@ -56,35 +70,15 @@ void Button::render(sf::RenderWindow &window)
 {
 
 	//window.draw(enemyRect);
-	sf::CircleShape node(m_radius);
-	if (expand == false && highlight == false && selected == false)
-	{
-		node.setFillColor(sf::Color(127, 127, 127));
-	}
-	else if (expand == true && selected == false)
-	{
-		node.setFillColor(sf::Color(0, 249, 33, 200));
-	}
-	else if (selected == true && highlight == false)
-	{
-		node.setFillColor(sf::Color::Blue);
-	}
-	else if (selected == true && highlight == true)
-	{
-		node.setFillColor(sf::Color(249, 203, 0));
-	}
-	else
-	{
-		node.setFillColor(sf::Color::Red);
-	}
-
+	
 	button.setFillColor(sf::Color(127, 127, 127));
 
 	button.setOutlineThickness(5);
 	button.setOutlineColor(sf::Color(0, 0, 0));
 	button.setPosition(m_position);
-	bu
-	
+	button.setSize(m_size);
+	m_name.setPosition(m_position.x + (200 / 4), m_position.y + (100 / 4));
+	m_name.setColor(sf::Color::White);
 	window.draw(button);
 	window.draw(m_name);
 

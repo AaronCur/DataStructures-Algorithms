@@ -12,7 +12,7 @@ Nodeq2::Nodeq2(float x, float y, sf::String name) :
 	}
 
 	m_name.setFont(m_font);
-	m_name.setCharacterSize(15);
+	m_name.setCharacterSize(18);
 	m_name.setString(m_nameText);
 	
 
@@ -39,8 +39,8 @@ void Nodeq2::mouseDetection(sf::Vector2i mousePos, std::vector<std::string> sdes
 	if (sdest.size() < 2)
 	{
 		if ((m_position.x < mousePos.x) &&
-			(m_position.x + m_radius > mousePos.x) &&
-			(m_position.y + m_radius > mousePos.y) &&
+			(m_position.x + (m_radius * 2) > mousePos.x) &&
+			(m_position.y + (m_radius * 2) > mousePos.y) &&
 			(m_position.y < mousePos.y))
 		{
 			selected = true;
@@ -61,7 +61,7 @@ void Nodeq2::render(sf::RenderWindow &window)
 	}
 	else if (expand == true && selected == false)
 	{
-		node.setFillColor(sf::Color(0, 249, 33, 200));
+		node.setFillColor(sf::Color(0, 249, 33 ));
 	}
 	else if (selected == true && highlight == false)
 	{
@@ -76,8 +76,8 @@ void Nodeq2::render(sf::RenderWindow &window)
 		node.setFillColor(sf::Color::Red);
 	}
 	
-	node.setOutlineThickness(0);
-	node.setOutlineColor(sf::Color(170, 170, 170));
+	node.setOutlineThickness(4);
+	node.setOutlineColor(sf::Color(0, 0, 0));
 	node.setPosition(m_position);
 	m_name.setPosition(m_position.x + 5, m_position.y + 2);
 	window.draw(node);

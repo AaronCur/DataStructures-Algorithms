@@ -67,13 +67,13 @@ Game::Game() :
 
 	//m_nodeq2 = new Nodeq2(100, 100);
 	m_edge = new Edge(100, 100,100,100);
+	m_button = new Button();
 
 	while (myfile >> NodeLabel >> posX >> posY) {
 
-		nodes.push_back(new Nodeq2(posX, posY,NodeLabel));
-
 		nodeMap[NodeLabel] = i;
 		myGraph.addNode(std::make_pair(NodeLabel, 0), i++);
+		nodes.push_back(new Nodeq2(posX, posY, NodeLabel));
 	}
 
 	myfile.close();
@@ -169,11 +169,6 @@ void Game::runAstar()
 /// <param name="time">update delta time</param>
 void Game::update(sf::Time time)
 {
-	if (sdest.size() == 2 && active == true)
-	{
-		runAstar();
-		active = false;
-	}
 	for (int i = 0; i < nodes.size(); i++)
 	{
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && nodes[i]->selected == false)
@@ -194,6 +189,71 @@ void Game::update(sf::Time time)
 	{
 		edges[i]->update(time);
 	}
+
+	m_button->update(time);
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && m_button ->selected == false)
+	{
+		m_mousePos = sf::Mouse::getPosition(m_window);
+		m_button->mouseDetection(m_mousePos);
+		
+		if (m_button->selected == true)
+		{
+			if (m_button->m_buttonVal == 1 )
+			{
+				runAstar();
+				//active = true;
+			}
+			else if(m_button->m_buttonVal == 0)
+			{
+				resetAstar();
+			}
+
+			//active = true;
+		}
+
+	}
+	else if((sf::Mouse::isButtonPressed(sf::Mouse::Left) == false))
+	{
+		m_button->selected = false;
+
+	}
+	
+}
+void Game::resetAstar()
+{
+	nodes.clear();
+	sdest.clear();
+
+
+	std::string NodeLabel;
+	int posX;
+	int posY;
+	int i = 0;
+	ifstream myfile;
+	myfile.open("nodesQ2.txt");
+
+	m_button = new Button();
+
+	while (myfile >> NodeLabel >> posX >> posY) {
+
+		nodes.push_back(new Nodeq2(posX, posY, NodeLabel));
+	}
+
+	myfile.close();
+	myfile.open("arcsQ2.txt");
+
+	int from, to, weight, linefromX, linefromY, linetoX, linetoY;
+	std::string s_from, s_to;
+	while (myfile >> s_from >> s_to >> weight >> linefromX >> linefromY >> linetoX >> linetoY) {
+		std::cout << s_from << "," << s_to << std::endl;
+		edges.push_back(new Edge(linefromX, linefromY, linetoX, linetoY));
+	}
+
+	myfile.close();
+
+	//system("PAUSE");
+
 }
 
 
@@ -214,6 +274,7 @@ void Game::render()
 	{
 		nodes[i]->render(m_window);
 	}
+	m_button->render(m_window);
 	m_window.display();
 }
 
