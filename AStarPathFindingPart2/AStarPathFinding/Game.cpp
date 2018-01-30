@@ -52,48 +52,7 @@ Game::Game() :
 	}
 
 
-	// Meaning of template arguments below:
-	// pair<string, int> is the data we are storing at each node
-	// int is the arc type (the data stored at each edge or arc)
-
-
-	std::string NodeLabel;
-	int posX;
-	int posY;
-	int i = 0;
-	ifstream myfile;
-	myfile.open("nodesQ2.txt");
-	
-
-	//m_nodeq2 = new Nodeq2(100, 100);
-	m_edge = new Edge(100, 100,100,100);
-	m_button = new Button();
-
-	while (myfile >> NodeLabel >> posX >> posY) {
-
-		nodeMap[NodeLabel] = i;
-		myGraph.addNode(std::make_pair(NodeLabel, 0), i++);
-		nodes.push_back(new Nodeq2(posX, posY, NodeLabel));
-	}
-
-	myfile.close();
-	myfile.open("arcsQ2.txt");
-
-	int from, to, weight, linefromX, linefromY, linetoX, linetoY;
-	std::string s_from, s_to;
-	while (myfile >> s_from >> s_to >> weight >> linefromX >> linefromY >> linetoX >> linetoY) {
-		from = s_from.at(0) - 'A';
-		to = s_to.at(0) - 'A';
-		from = nodeMap[s_from];
-		to = nodeMap[s_to];
-		std::cout << s_from << "," << s_to << std::endl;
-		myGraph.addArc(from, to, weight);
-		edges.push_back(new Edge(linefromX, linefromY, linetoX, linetoY));
-	}
-
-	myfile.close();
-
-	//system("PAUSE");
+	resetAstar();
 		
 }
 
@@ -137,8 +96,10 @@ void Game::run()
 /// </summary>
 void Game::runAstar()
 {
-
+	
 	std::vector<Node *> path;
+
+	path.clear();
 
 	myGraph.aStar(myGraph.nodeIndex(nodeMap[sdest[0]]), myGraph.nodeIndex(nodeMap[sdest[1]]), visit, path);
 
@@ -159,7 +120,7 @@ void Game::runAstar()
 		}
 
 	}
-
+	
 }
 
 
@@ -222,10 +183,9 @@ void Game::update(sf::Time time)
 }
 void Game::resetAstar()
 {
-	nodes.clear();
+	m_button = new Button();
 	sdest.clear();
-
-
+	nodes.clear();
 	std::string NodeLabel;
 	int posX;
 	int posY;
@@ -233,20 +193,29 @@ void Game::resetAstar()
 	ifstream myfile;
 	myfile.open("nodesQ2.txt");
 
-	m_button = new Button();
+
+	//m_nodeq2 = new Nodeq2(100, 100);
 
 	while (myfile >> NodeLabel >> posX >> posY) {
 
 		nodes.push_back(new Nodeq2(posX, posY, NodeLabel));
+
+		nodeMap[NodeLabel] = i;
+		myGraph.addNode(std::make_pair(NodeLabel, 0), i++);
 	}
 
 	myfile.close();
 	myfile.open("arcsQ2.txt");
 
-	int from, to, weight, linefromX, linefromY, linetoX, linetoY;
+	int from, to, weight, linefromX, linefromY, linetoX, linetoY = 0;
 	std::string s_from, s_to;
 	while (myfile >> s_from >> s_to >> weight >> linefromX >> linefromY >> linetoX >> linetoY) {
+		from = s_from.at(0) - 'A';
+		to = s_to.at(0) - 'A';
+		from = nodeMap[s_from];
+		to = nodeMap[s_to];
 		std::cout << s_from << "," << s_to << std::endl;
+		myGraph.addArc(from, to, weight);
 		edges.push_back(new Edge(linefromX, linefromY, linetoX, linetoY));
 	}
 
