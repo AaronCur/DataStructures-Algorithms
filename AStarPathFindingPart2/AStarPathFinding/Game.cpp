@@ -20,6 +20,7 @@ typedef GraphNode<std::pair<std::string, int>, int> Node;
 
 void visit(Node * node) {
 	cout << "Visiting: " << node->data().first << endl;
+
 	std::string temp = node->data().first;
 
 	for (int i = 0; i < nodes.size(); i++)

@@ -1,11 +1,9 @@
-#include "Nodeq2.h"
+#include "Button.h"
 #include <iostream>
-Nodeq2::Nodeq2(float x, float y, sf::String name) :
-	m_position(x, y),
-	m_radius(10.0f),
-	m_nameText(name)
+Button::Button() :
+	m_position(500, 500)
 {
-
+	
 	if (!m_font.loadFromFile("c:/windows/fonts/Adventure.otf"))
 	{
 		std::cout << "problem loading font" << std::endl;
@@ -13,28 +11,32 @@ Nodeq2::Nodeq2(float x, float y, sf::String name) :
 
 	m_name.setFont(m_font);
 	m_name.setCharacterSize(15);
-	m_name.setString(m_nameText);
 	
-
+	
 }
 
-Nodeq2::~Nodeq2()
+Button::~Button()
 {
 
 }
 
-void Nodeq2::update(sf::Time t)
+void Button::update(sf::Time t)
 {
-	
-	
-
-	if (highlight == true)
+	switch (m_buttonVal)
 	{
-		expand = false;
-		//selected = false;
+	case 0:
+		m_name.setString(m_button1);
+		m_name.setPosition(m_position.x + 5, m_position.y + 2);
+		break;
+	case 1:
+		m_name.setString(m_button2);
+		m_name.setPosition(m_position.x, m_position.y + 2);
+		break;
+	default:
+		break;
 	}
 }
-void Nodeq2::mouseDetection(sf::Vector2i mousePos, std::vector<std::string> sdest)
+void Button::mouseDetection(sf::Vector2i mousePos, std::vector<std::string> sdest)
 {
 	if (sdest.size() < 2)
 	{
@@ -50,14 +52,14 @@ void Nodeq2::mouseDetection(sf::Vector2i mousePos, std::vector<std::string> sdes
 
 
 
-void Nodeq2::render(sf::RenderWindow &window)
+void Button::render(sf::RenderWindow &window)
 {
 
-		//window.draw(enemyRect);
+	//window.draw(enemyRect);
 	sf::CircleShape node(m_radius);
 	if (expand == false && highlight == false && selected == false)
 	{
-		node.setFillColor(sf::Color(127,127,127));
+		node.setFillColor(sf::Color(127, 127, 127));
 	}
 	else if (expand == true && selected == false)
 	{
@@ -71,16 +73,19 @@ void Nodeq2::render(sf::RenderWindow &window)
 	{
 		node.setFillColor(sf::Color(249, 203, 0));
 	}
-	else 
+	else
 	{
 		node.setFillColor(sf::Color::Red);
 	}
+
+	button.setFillColor(sf::Color(127, 127, 127));
+
+	button.setOutlineThickness(5);
+	button.setOutlineColor(sf::Color(0, 0, 0));
+	button.setPosition(m_position);
+	bu
 	
-	node.setOutlineThickness(0);
-	node.setOutlineColor(sf::Color(170, 170, 170));
-	node.setPosition(m_position);
-	m_name.setPosition(m_position.x + 5, m_position.y + 2);
-	window.draw(node);
+	window.draw(button);
 	window.draw(m_name);
 
 
