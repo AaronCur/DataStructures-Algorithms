@@ -1,15 +1,12 @@
 #include "Nodeq2.h"
 #include <iostream>
-Nodeq2::Nodeq2(float x, float y, sf::String name) :
+Nodeq2::Nodeq2(float x, float y, sf::String name, sf::Font font) :
 	m_position(x, y),
 	m_radius(10.0f),
-	m_nameText(name)
+	m_nameText(name),
+	m_font(font)
 {
 
-	if (!m_font.loadFromFile("c:/windows/fonts/Adventure.otf"))
-	{
-		std::cout << "problem loading font" << std::endl;
-	}
 
 	m_name.setFont(m_font);
 	m_name.setCharacterSize(18);
@@ -53,11 +50,10 @@ void Nodeq2::mouseDetection(sf::Vector2i mousePos, std::vector<std::string> sdes
 void Nodeq2::render(sf::RenderWindow &window)
 {
 
-		//window.draw(enemyRect);
-	sf::CircleShape node(m_radius);
+	node.setRadius(m_radius);
 	if (expand == false && highlight == false && selected == false)
 	{
-		node.setFillColor(sf::Color(127,127,127));
+		node.setFillColor(sf::Color(127, 127, 127));
 	}
 	else if (expand == true && selected == false)
 	{
@@ -65,7 +61,7 @@ void Nodeq2::render(sf::RenderWindow &window)
 	}
 	else if (selected == true && highlight == false)
 	{
-		node.setFillColor(sf::Color::Blue);
+		node.setFillColor(sf::Color(249, 203, 0));
 	}
 	else if (selected == true && highlight == true)
 	{

@@ -5,7 +5,7 @@
 class Nodeq2
 {
 public:
-	Nodeq2(float x, float y, sf::String name);
+	Nodeq2(float x, float y, sf::String name, sf::Font m_font);
 	~Nodeq2();
 
 	float m_radius;

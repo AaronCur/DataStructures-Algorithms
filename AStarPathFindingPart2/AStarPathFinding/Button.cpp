@@ -1,23 +1,16 @@
 #include "Button.h"
 #include <iostream>
-Button::Button() :
+Button::Button(sf::Font font) :
 	m_position(800, 250),
 	m_size(200,100),
 	m_button1("Start"),
-	m_button2("Reset")
+	m_button2("Reset"),
+	m_font(font)
 {
 	
-	if (!m_font.loadFromFile("c:/windows/fonts/Adventure.otf"))
-	{
-		std::cout << "problem loading font" << std::endl;
-	}
-
 	m_name.setFont(m_font);
 	m_name.setCharacterSize(40);
 
-	
-	
-	
 }
 
 Button::~Button()
@@ -41,7 +34,7 @@ void Button::update(sf::Time t)
 		break;
 	}
 }
-void Button::mouseDetection(sf::Vector2i mousePos)
+void Button::mouseDetection(sf::Vector2i mousePos, std::vector<std::string> sdest)
 {
 
 		if ((m_position.x < mousePos.x) &&
@@ -50,7 +43,7 @@ void Button::mouseDetection(sf::Vector2i mousePos)
 			(m_position.y < mousePos.y))
 		{
 			
-			if (m_buttonVal == 0 && selected == false)
+			if (m_buttonVal == 0 && selected == false && sdest.size()==2)
 			{
 				m_buttonVal = 1;
 				selected = true;
@@ -73,8 +66,6 @@ void Button::mouseDetection(sf::Vector2i mousePos)
 
 void Button::render(sf::RenderWindow &window)
 {
-
-	//window.draw(enemyRect);
 	
 	button.setFillColor(sf::Color(127, 127, 127));
 

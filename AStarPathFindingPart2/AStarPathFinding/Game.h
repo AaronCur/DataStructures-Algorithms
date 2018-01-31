@@ -58,6 +58,23 @@ protected:
 
 	bool active = true;
 
+	sf::Font m_font;
+	sf::CircleShape unexpandednode;
+	sf::Text m_unexpanded;
+	sf::String m_unexpandedText;
+
+	sf::CircleShape expandednode;
+	sf::Text m_expanded;
+	sf::String m_expandedText;
+
+	sf::CircleShape finalpathnode;
+	sf::Text m_finalPath;
+	sf::String m_pathText;
+
+	sf::CircleShape startdestnode;
+	sf::Text m_startDest;
+	sf::String m_startDestText;
+
 
 	
 	
