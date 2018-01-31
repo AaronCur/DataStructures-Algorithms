@@ -286,8 +286,6 @@ void Game::resetAstar()
 	myfile.open("nodesQ2.txt");
 
 
-	//m_nodeq2 = new Nodeq2(100, 100);
-
 	while (myfile >> NodeLabel >> posX >> posY) {
 
 		nodes.push_back(new Nodeq2(posX, posY, NodeLabel,m_font));
@@ -295,10 +293,7 @@ void Game::resetAstar()
 		nodeMap[NodeLabel] = i;
 		myGraph.addNode(std::make_pair(NodeLabel, 0), i++);
 	}
-	//for (int i = 0; nodes.size(); i++)
-	//{
-		//nodes[i]->m_heuristic = 0;
-	//}
+	
 
 	myfile.close();
 	myfile.open("arcsQ2.txt");
