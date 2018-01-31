@@ -9,7 +9,7 @@ public:
 	~Nodeq2();
 
 	float m_radius;
-	float m_heuristic = 0;
+	float m_heuristic;
 	bool highlight = false;
 	bool expand = false;
 	bool selected = false;

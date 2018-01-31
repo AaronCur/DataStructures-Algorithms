@@ -12,6 +12,23 @@ using namespace std;
 template <class NodeType, class ArcType> class GraphArc;
 template <class NodeType, class ArcType> class GraphNode;
 
+template <class NodeType, class ArcType>
+class NodeSearchCostComparer
+{
+public:
+
+	typedef GraphArc<NodeType, ArcType> Arc;
+	typedef GraphNode<NodeType, ArcType> Node;
+	bool operator()(Node * n1, Node * n2)
+	{
+		std::pair<std::string, int> p1 = n1->data();
+		std::pair<std::string, int> p2 = n2->data();
+
+		p1.second = p1.second + n1->m_heuristic;
+		p2.second = p2.second + n2->m_heuristic;
+		return p1.second > p2.second;
+	}
+};
 // ----------------------------------------------------------------
 //  Name:           Graph
 //  Description:    This is the graph class, it contains all the
@@ -354,6 +371,8 @@ void Graph<NodeType, ArcType>::ucs(Node* start, Node* dest, std::function<void(N
 		auto compare = [](Node * n1, Node * n2) {
 			std::pair<std::string, int> p1 = n1->data();
 			std::pair<std::string, int> p2 = n2->data();
+			p1.second = p1.second + n1->m_heuristic;
+			p2.second = p2.second + n2->m_heuristic;
 			return p1.second > p2.second;
 		};
 
@@ -414,16 +433,8 @@ void Graph<NodeType, ArcType>::aStar(Node* start, Node* dest, std::function<void
 
 	//ucs(dest, start, f_visit, path);
 
-	auto compare = [](Node * n1, Node * n2) {
-		std::pair<std::string, int> p1 = n1->data();
-		std::pair<std::string, int> p2 = n2->data();
-
-		p1.second = p1.second + n1->m_heuristic;
-		p2.second = p2.second + n2->m_heuristic;
-		return p1.second > p2.second;
-	};
-
-	std::priority_queue<Node *, std::vector<Node * >, decltype(compare)> pq(compare);
+	//MyPriorityQueue<Node *, std::vector<Node * >, decltype(compare)> pq(compare);
+	MyPriorityQueue<Node *, std::vector<Node *>, NodeSearchCostComparer<NodeType, ArcType>> pq;
 
 
 	for (int i = 0; i < m_nodes.size(); i++)
@@ -455,7 +466,7 @@ void Graph<NodeType, ArcType>::aStar(Node* start, Node* dest, std::function<void
 				{
 					(*pqChild).node()->data().second = pq.top()->data().second + (*pqChild).weight();
 					(*pqChild).node()->setPrevious(pq.top());
-					// reorder
+					pq.reorder();
 				}
 				if ((*pqChild).node()->marked() == false)
 				{
@@ -464,9 +475,14 @@ void Graph<NodeType, ArcType>::aStar(Node* start, Node* dest, std::function<void
 				}
 				
 			}
+			
 		}
+		
 		// dequeue the current node.
+		
 		pq.pop();
+		
+		
 	}
 
 	Node * temp = dest;
@@ -478,6 +494,22 @@ void Graph<NodeType, ArcType>::aStar(Node* start, Node* dest, std::function<void
 	}
 
 }
+template <typename Data, typename Container, typename Predicate>
+class MyPriorityQueue : public std::priority_queue<Data, Container, Predicate>
+{
+public:
+	// std::priority_queue has two useful members:
+	// 1. c is the underlying container of a priority_queue
+	// 2. comp is the comparison predicate
+	void reorder()
+	{
+		// std::make_heap rearranges the elements in the range [first,last] in such 
+		//  a way that they form a heap.
+		// std::begin() returns an iterator to the beginning of the given container c 
+		std::make_heap(std::begin(c), std::end(c), comp);
+	}
+};
+
 
 
 

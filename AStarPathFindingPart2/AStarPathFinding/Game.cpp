@@ -165,7 +165,9 @@ void Game::runAstar()
 
 	path.clear();
 
-	myGraph.aStar(myGraph.nodeIndex(nodeMap[sdest[0]]), myGraph.nodeIndex(nodeMap[sdest[1]]), visit, path, passHeuristic);
+	//myGraph.aStar(myGraph.nodeIndex(nodeMap[sdest[0]]), myGraph.nodeIndex(nodeMap[sdest[1]]), visit, path, passHeuristic);
+	myGraph.ucs(myGraph.nodeIndex(nodeMap[sdest[0]]), myGraph.nodeIndex(nodeMap[sdest[1]]), visit, path);
+
 
 	for (int i = 0; i < path.size(); i++)
 	{
@@ -190,6 +192,8 @@ void Game::calculateHeuristic() {
 
 	for (int i = 0; i < nodes.size(); i++)
 	{
+		nodes[i]->m_heuristic = 0;
+
 		if (nodes[i]->m_nameText != startdest[1]->m_nameText)
 		{
 			float x = (startdest[1]->m_position.x - nodes[i]->m_position.x)*(startdest[1]->m_position.x - nodes[i]->m_position.x);
@@ -272,6 +276,7 @@ void Game::resetAstar()
 	active = false;
 	myGraph.clearMarks();
 	sdest.clear();
+	startdest.clear();
 	nodes.clear();
 	std::string NodeLabel;
 	int posX;
@@ -290,6 +295,10 @@ void Game::resetAstar()
 		nodeMap[NodeLabel] = i;
 		myGraph.addNode(std::make_pair(NodeLabel, 0), i++);
 	}
+	//for (int i = 0; nodes.size(); i++)
+	//{
+		//nodes[i]->m_heuristic = 0;
+	//}
 
 	myfile.close();
 	myfile.open("arcsQ2.txt");

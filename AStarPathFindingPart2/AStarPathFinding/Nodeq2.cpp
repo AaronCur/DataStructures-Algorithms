@@ -4,7 +4,8 @@ Nodeq2::Nodeq2(float x, float y, sf::String name, sf::Font font) :
 	m_position(x, y),
 	m_radius(10.0f),
 	m_nameText(name),
-	m_font(font)
+	m_font(font),
+	m_heuristic(0)
 {
 
 
