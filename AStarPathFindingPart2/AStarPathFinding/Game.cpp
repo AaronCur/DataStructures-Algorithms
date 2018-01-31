@@ -51,7 +51,7 @@ Game::Game() :
 		std::cout << "problem loading font" << std::endl;
 	}
 
-
+	m_button = new Button();
 	resetAstar();
 		
 }
@@ -130,11 +130,12 @@ void Game::runAstar()
 /// <param name="time">update delta time</param>
 void Game::update(sf::Time time)
 {
+	m_mousePos = sf::Mouse::getPosition(m_window);
 	for (int i = 0; i < nodes.size(); i++)
 	{
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && nodes[i]->selected == false)
 		{
-			m_mousePos = sf::Mouse::getPosition(m_window);
+			
 			nodes[i]->mouseDetection(m_mousePos, sdest);
 			if (nodes[i]->selected == true)
 			{
@@ -153,19 +154,18 @@ void Game::update(sf::Time time)
 
 	m_button->update(time);
 
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && m_button ->selected == false)
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && m_button->selected == false)
 	{
-		m_mousePos = sf::Mouse::getPosition(m_window);
 		m_button->mouseDetection(m_mousePos);
 		
-		if (m_button->selected == true)
+		if (m_button->selected == true )
 		{
 			if (m_button->m_buttonVal == 1 )
 			{
 				runAstar();
 				//active = true;
 			}
-			else if(m_button->m_buttonVal == 0)
+		   else if(m_button->m_buttonVal == 0)
 			{
 				resetAstar();
 			}
@@ -183,7 +183,7 @@ void Game::update(sf::Time time)
 }
 void Game::resetAstar()
 {
-	m_button = new Button();
+	myGraph.clearMarks();
 	sdest.clear();
 	nodes.clear();
 	std::string NodeLabel;

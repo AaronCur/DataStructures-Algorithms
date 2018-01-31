@@ -361,6 +361,7 @@ void Graph<NodeType, ArcType>::ucs(Node* start, Node* dest, std::function<void(N
 
 		for (int i = 0; i < m_nodes.size(); i++)
 		{
+			m_nodes[i]->setPrevious(nullptr);
 			m_nodes[i]->data().second = std::numeric_limits<int>::max();
 
 
@@ -428,6 +429,7 @@ void Graph<NodeType, ArcType>::aStar(Node* start, Node* dest, std::function<void
 	for (int i = 0; i < m_nodes.size(); i++)
 	{
 		//Calculateh h[v]
+		m_nodes[i]->setPrevious(nullptr);
 		m_nodes[i]->data().second = std::numeric_limits<int>::max();
 		
 

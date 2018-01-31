@@ -12,6 +12,7 @@ public:
 	bool switched = false;
 	bool active = false;
 	bool selected = false;
+	bool click = false;
 	void update(sf::Time);
 	void mouseDetection(sf::Vector2i mousePos);
 	void render(sf::RenderWindow &window);

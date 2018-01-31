@@ -49,18 +49,23 @@ void Button::mouseDetection(sf::Vector2i mousePos)
 			(m_position.y + m_size.y > mousePos.y) &&
 			(m_position.y < mousePos.y))
 		{
+			
 			if (m_buttonVal == 0 && selected == false)
 			{
 				m_buttonVal = 1;
 				selected = true;
+				
 			}
 			else if(m_buttonVal == 1 && selected == false)
 			{
 				m_buttonVal = 0;
 				selected = true;
+
 			}
 
 		}
+
+		
 	
 }
 
