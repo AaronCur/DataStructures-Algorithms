@@ -1,5 +1,7 @@
 #include "SFML/Audio.hpp"
 #include "Game.h"
+#include <cmath> 
+#include <math.h>
 Graph<pair<string, int>, int > myGraph(30);
 
 Graph<std::string, int> graph(25);
@@ -11,6 +13,8 @@ using std::pair;
 using namespace std;
 
 std::vector<Nodeq2 *> nodes;
+
+std::vector<Nodeq2 *> startdest;
 
 
 
@@ -34,6 +38,22 @@ void visit(Node * node) {
 	}
 	
 }
+void passHeuristic(Node * node) {
+
+	std::string temp = node->data().first;
+
+	for (int i = 0; i < nodes.size(); i++)
+	{
+		std::string temp2 = nodes[i]->m_nameText;
+		if (temp2 == temp)
+		{
+			node->m_heuristic = nodes[i]->m_heuristic;
+		}
+
+	}
+
+}
+
 Game::Game() :
 	m_window(sf::VideoMode(1280, 720, 32), "AstarProject")
 {
@@ -145,7 +165,7 @@ void Game::runAstar()
 
 	path.clear();
 
-	myGraph.aStar(myGraph.nodeIndex(nodeMap[sdest[0]]), myGraph.nodeIndex(nodeMap[sdest[1]]), visit, path);
+	myGraph.aStar(myGraph.nodeIndex(nodeMap[sdest[0]]), myGraph.nodeIndex(nodeMap[sdest[1]]), visit, path, passHeuristic);
 
 	for (int i = 0; i < path.size(); i++)
 	{
@@ -166,7 +186,25 @@ void Game::runAstar()
 	}
 	
 }
+void Game::calculateHeuristic() {
 
+	for (int i = 0; i < nodes.size(); i++)
+	{
+		if (nodes[i]->m_nameText != startdest[1]->m_nameText)
+		{
+			float x = (startdest[1]->m_position.x - nodes[i]->m_position.x)*(startdest[1]->m_position.x - nodes[i]->m_position.x);
+			float y = (startdest[1]->m_position.y - nodes[i]->m_position.y)*(startdest[1]->m_position.y - nodes[i]->m_position.y);
+
+			float result = sqrt(x + y);
+			nodes[i]->m_heuristic = result;
+
+			std::cout << nodes[i]->m_heuristic << std::endl;
+		}
+
+	}
+	
+
+}
 
 /// <summary>
 /// Method to handle all game updates
@@ -181,9 +219,15 @@ void Game::update(sf::Time time)
 		{
 			
 			nodes[i]->mouseDetection(m_mousePos, sdest);
-			if (nodes[i]->selected == true)
+			if (nodes[i]->selected == true && sdest.size()<2)
 			{
 				sdest.push_back(nodes[i]->m_nameText);
+				startdest.push_back(nodes[i]);
+			}
+			if (sdest.size() == 2 && active == false)
+			{
+				calculateHeuristic();
+				active = true;
 			}
 			
 		}
@@ -207,14 +251,12 @@ void Game::update(sf::Time time)
 			if (m_button->m_buttonVal == 1 && sdest.size() == 2 )
 			{
 				runAstar();
-				//active = true;
 			}
 		   else if(m_button->m_buttonVal == 0)
 			{
 				resetAstar();
 			}
 
-			//active = true;
 		}
 
 	}
@@ -227,7 +269,7 @@ void Game::update(sf::Time time)
 }
 void Game::resetAstar()
 {
-
+	active = false;
 	myGraph.clearMarks();
 	sdest.clear();
 	nodes.clear();

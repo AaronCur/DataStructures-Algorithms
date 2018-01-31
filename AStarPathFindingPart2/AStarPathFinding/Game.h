@@ -34,6 +34,7 @@ protected:
 	void render();
 	void runAstar();
 	void resetAstar();
+	void calculateHeuristic();
 
 	void processGameEvents();
 	//void NodeVisited(Node * node);
@@ -54,9 +55,10 @@ protected:
 	//std::vector<Nodeq2 *> nodes;
 	std::vector<Edge *> edges;
 	std::vector<std::string> sdest;
+	std::vector<Nodeq2 *> sdestnodes;
 	std::map<std::string, int>nodeMap;
 
-	bool active = true;
+	bool active = false;
 
 	sf::Font m_font;
 	sf::CircleShape unexpandednode;

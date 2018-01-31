@@ -9,6 +9,7 @@ public:
 	~Nodeq2();
 
 	float m_radius;
+	float m_heuristic = 0;
 	bool highlight = false;
 	bool expand = false;
 	bool selected = false;
@@ -20,6 +21,9 @@ public:
 	sf::Font m_font;
 	sf::Text m_name;
 	sf::String m_nameText;
+
+	sf::Text m_heuristictext;
+	sf::String m_heuristicString;
 private:
 
 };

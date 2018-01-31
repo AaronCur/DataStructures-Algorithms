@@ -11,6 +11,11 @@ Nodeq2::Nodeq2(float x, float y, sf::String name, sf::Font font) :
 	m_name.setFont(m_font);
 	m_name.setCharacterSize(18);
 	m_name.setString(m_nameText);
+
+	m_heuristictext.setFont(m_font);
+	m_heuristictext.setCharacterSize(18);
+	m_heuristictext.setPosition(m_position.x + 3, m_position.y + 30);
+	m_heuristictext.setColor(sf::Color::Blue);
 	
 
 }
@@ -49,6 +54,7 @@ void Nodeq2::mouseDetection(sf::Vector2i mousePos, std::vector<std::string> sdes
 
 void Nodeq2::render(sf::RenderWindow &window)
 {
+	m_heuristictext.setString(std::to_string((int)m_heuristic));
 
 	node.setRadius(m_radius);
 	if (expand == false && highlight == false && selected == false)
@@ -78,6 +84,7 @@ void Nodeq2::render(sf::RenderWindow &window)
 	m_name.setPosition(m_position.x + 5, m_position.y + 2);
 	window.draw(node);
 	window.draw(m_name);
+	window.draw(m_heuristictext);
 
 
 }

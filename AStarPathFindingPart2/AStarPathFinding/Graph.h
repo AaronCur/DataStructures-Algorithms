@@ -53,7 +53,7 @@ public:
     void breadthFirst( Node* pNode, std::function<void(Node *)> f_visit);
 	void adaptedBreadthFirst( Node* pCurrent, Node* pGoal );	
 	void ucs(Node* start, Node* dest, std::function<void(Node *)> f_visit,std::vector<Node *> & path);
-	void aStar(Node* start, Node* dest, std::function<void(Node *)> f_visit,std::vector<Node *>& path);
+	void aStar(Node* start, Node* dest, std::function<void(Node *)> f_visit,std::vector<Node *>& path, std::function<void(Node *)> passHeuristic);
 
 };
 
@@ -410,9 +410,9 @@ void Graph<NodeType, ArcType>::ucs(Node* start, Node* dest, std::function<void(N
 }
 
 template<class NodeType, class ArcType>
-void Graph<NodeType, ArcType>::aStar(Node* start, Node* dest, std::function<void(Node *)> f_visit, std::vector<Node *> & path) {
+void Graph<NodeType, ArcType>::aStar(Node* start, Node* dest, std::function<void(Node *)> f_visit, std::vector<Node *> & path, std::function<void(Node *)> passHeuristic) {
 
-	ucs(dest, start, f_visit, path);
+	//ucs(dest, start, f_visit, path);
 
 	auto compare = [](Node * n1, Node * n2) {
 		std::pair<std::string, int> p1 = n1->data();
@@ -424,17 +424,18 @@ void Graph<NodeType, ArcType>::aStar(Node* start, Node* dest, std::function<void
 	};
 
 	std::priority_queue<Node *, std::vector<Node * >, decltype(compare)> pq(compare);
-	start->data().second = 0;
+
 
 	for (int i = 0; i < m_nodes.size(); i++)
 	{
 		//Calculateh h[v]
+		passHeuristic(m_nodes[i]);
 		m_nodes[i]->setPrevious(nullptr);
 		m_nodes[i]->data().second = std::numeric_limits<int>::max();
 		
 
 	}
-
+	start->data().second = 0;
 	pq.push(start);
 	start->setMarked(true);
 	while (pq.size() != 0 && pq.top() != dest)
@@ -452,27 +453,29 @@ void Graph<NodeType, ArcType>::aStar(Node* start, Node* dest, std::function<void
 				
 				if (distC < (*pqChild).node()->data().second + (*pqChild).node()->m_heuristic)
 				{
-					(*pqChild).node()->data().second = distC;
+					(*pqChild).node()->data().second = pq.top()->data().second + (*pqChild).weight();
 					(*pqChild).node()->setPrevious(pq.top());
+					// reorder
 				}
 				if ((*pqChild).node()->marked() == false)
 				{
 					pq.push((*pqChild).node());
 					(*pqChild).node()->setMarked(true);
 				}
+				
 			}
 		}
 		// dequeue the current node.
 		pq.pop();
 	}
 
-	/*Node * temp = dest;
+	Node * temp = dest;
 	while (temp != nullptr)
 	{
 		path.push_back(temp);
 		temp = temp->previous();
 
-	}*/
+	}
 
 }
 
