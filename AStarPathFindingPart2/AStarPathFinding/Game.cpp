@@ -165,8 +165,8 @@ void Game::runAstar()
 
 	path.clear();
 
-	//myGraph.aStar(myGraph.nodeIndex(nodeMap[sdest[0]]), myGraph.nodeIndex(nodeMap[sdest[1]]), visit, path, passHeuristic);
-	myGraph.ucs(myGraph.nodeIndex(nodeMap[sdest[0]]), myGraph.nodeIndex(nodeMap[sdest[1]]), visit, path);
+	myGraph.aStar(myGraph.nodeIndex(nodeMap[sdest[0]]), myGraph.nodeIndex(nodeMap[sdest[1]]), visit, path, passHeuristic);
+	//myGraph.ucs(myGraph.nodeIndex(nodeMap[sdest[0]]), myGraph.nodeIndex(nodeMap[sdest[1]]), visit, path);
 
 
 	for (int i = 0; i < path.size(); i++)
