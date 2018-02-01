@@ -453,35 +453,30 @@ void Graph<NodeType, ArcType>::aStar(Node* start, Node* dest, std::function<void
 	{
 		auto pqChild = pq.top()->arcList().begin();
 		auto pqEnd = pq.top()->arcList().end();
-		f_visit(pq.top());
-
+		
 		for (; pqChild != pqEnd; pqChild++)
 		{
 			if ((*pqChild).node() != pq.top()->previous()) // dont go to previous node
 			{
+				f_visit((*pqChild).node());
 				auto distC = pq.top()->data().second + (*pqChild).node()->m_heuristic + (*pqChild).weight(); /* h(c) + g(c)*/
-				//auto distC = (*pqChild).node()->data().second + (*pqChild).node()->m_heuristic;
 				
 				if (distC < (*pqChild).node()->data().second + (*pqChild).node()->m_heuristic)
 				{
 					(*pqChild).node()->data().second = pq.top()->data().second + (*pqChild).weight();
 					(*pqChild).node()->setPrevious(pq.top());
-					pq.reorder();
 				}
 				if ((*pqChild).node()->marked() == false)
 				{
 					pq.push((*pqChild).node());
 					(*pqChild).node()->setMarked(true);
 				}
-				
 			}
-			
 		}
 		
 		// dequeue the current node.
-		
 		pq.pop();
-		
+		pq.reorder();
 		
 	}
 
