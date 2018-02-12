@@ -2,6 +2,8 @@
 #include "BinaryTreeIterator.h"
 
 #include <iostream>
+#include <stack> 
+
 
 template<typename T>
 void postOrder(BinaryTreeNode<T>* node)
@@ -44,17 +46,25 @@ void binaryPreorder(Iterator position)
 template<typename T>
 void inOrder(BinaryTreeNode<T>* node)
 {
-	if (node->leftChild().node() != nullptr)
-	{
-		postOrder(node->leftChild().node());
-	}
 
-	if (node->rightChild().node() != nullptr)
-	{
-		postOrder(node->rightChild().node());
-	}
+	std::stack<BinaryTreeNode<T>*> myStack;
 
-	std::cout << node->element() << std::endl;
+	while (node != nullptr || !myStack.empty())
+	{
+		while (node != nullptr)
+		{
+			myStack.push(node);
+			node = node->leftChild().node();
+		}
+		if (node == nullptr)
+		{
+			node = myStack.top();
+			myStack.pop();
+			std::cout << node->element() << std::endl;
+			node = node->rightChild().node();
+
+		}
+	}
 
 }
 
@@ -74,17 +84,18 @@ int main() {
 	//iter.downRight();
 	//iter.downRight();
 	
-	auto minimumVal = myTree.treeMinimum(iter);
+//	auto minimumVal = myTree.treeMinimum(iter);
 
 	
-	std::cout << "Depth of node: " << *iter << " is " << myTree.depth( iter ) << std::endl;
+	//std::cout << "Depth of node: " << *iter << " is " << myTree.depth( iter ) << std::endl;
 
 	//std::cout << "Depth of node: " << *iter << " is " << myTree.depthNonRecursive( iter ) << std::endl;
 
-	std::cout << "Minimum Value: " << *minimumVal<< std::endl;
-	binaryPreorder<BinaryTreeIterator<float>>(myTree.root().node());
+	//std::cout << "Minimum Value: " << *minimumVal<< std::endl;
+	//binaryPreorder<BinaryTreeIterator<float>>(myTree.root().node());
    // postOrder(myTree.root().node());
 	//binaryPreorder(myTree.root());
+	inOrder(myTree.root().node());
 
 	system("PAUSE");
 	
