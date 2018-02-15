@@ -10,6 +10,8 @@
 #include <map>
 #include "Graph.h"
 #include "Nodeq2.h"
+#include "Edge.h"
+#include "Button.h"
 #include <utility> // for STL pair
 
 
@@ -26,11 +28,13 @@ public:
 	Game();
 	~Game();
 	void run();
-
+	
 protected:
 	void update(sf::Time time);
 	void render();
-	void processEvents();
+	void runAstar();
+	void resetAstar();
+	void calculateHeuristic();
 
 	void processGameEvents();
 	//void NodeVisited(Node * node);
@@ -43,8 +47,39 @@ protected:
 	sf::Font m_adventure;
 
 	Nodeq2 *m_nodeq2;
+	Edge *m_edge;
+	Button *m_button;
 
-	std::vector<Nodeq2 *> nodes;
+	sf::Vector2i m_mousePos;
+
+	//std::vector<Nodeq2 *> nodes;
+	std::vector<Edge *> edges;
+	std::vector<std::string> sdest;
+	std::vector<Nodeq2 *> sdestnodes;
+	std::map<std::string, int>nodeMap;
+
+	bool active = false;
+
+	sf::Font m_font;
+	sf::CircleShape unexpandednode;
+	sf::Text m_unexpanded;
+	sf::String m_unexpandedText;
+
+	sf::CircleShape expandednode;
+	sf::Text m_expanded;
+	sf::String m_expandedText;
+
+	sf::CircleShape finalpathnode;
+	sf::Text m_finalPath;
+	sf::String m_pathText;
+
+	sf::CircleShape startdestnode;
+	sf::Text m_startDest;
+	sf::String m_startDestText;
+
+
+	
+	
 
 };
 

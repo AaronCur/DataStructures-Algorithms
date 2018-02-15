@@ -70,6 +70,7 @@ void inOrder(BinaryTreeNode<T>* node)
 
 int main() {	
 
+
 	LinkedBinaryTree<int, BinaryTreeIterator<int>> myTree(13);
 
 	myTree.insertItem(10, myTree.root(), myTree.parent(myTree.root()));
@@ -81,11 +82,11 @@ int main() {
 	myTree.insertItem(17, myTree.root(), myTree.parent(myTree.root()));
 	myTree.insertItem(21, myTree.root(), myTree.parent(myTree.root()));
 	myTree.insertItem(18, myTree.root(), myTree.parent(myTree.root()));
+
     
 	//Lab 6: Uncomment below to test your solution to depth()...
 	BinaryTreeIterator<int> iter = myTree.root();
 	
-	iter.downRight();
 	//iter.downRight();
 	//iter.downRight();
 	
@@ -103,8 +104,7 @@ int main() {
 	//inOrder(myTree.root().node());
 	std::cout << myTree.height(myTree.root()) << std::endl;
 
-	
-	
+
 	system("PAUSE");
 	
 }

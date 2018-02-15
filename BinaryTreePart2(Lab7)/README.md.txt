@@ -2,6 +2,7 @@
 
 ### Learning outcomes
 
+<<<<<<< HEAD
 Create an instance of LinkedBinaryTree and populate it with nodes.
 - Describe the structure of a binary search tree (BST)
 - Write recurive and non-recursive implementions of the depth algorithm
@@ -35,3 +36,7 @@ Iterator treeMinimum(Iterator & n) const;
 This algorithm should find the minimum value for the subtree that is rooted at a given node.
 Parameter n is the root of this subtree and the return value should be an iterator that points to the
 minimum value of this subtree. Write an appropriate implementation of this function. 
+=======
+- Implement different methods of traversing a binary tree
+- Describe and implement the height algorithm for a binary tree
+>>>>>>> 6e4ccffcb5197cfd5efbc0d14d0719d55153a54b
