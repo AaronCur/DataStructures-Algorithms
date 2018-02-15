@@ -70,17 +70,22 @@ void inOrder(BinaryTreeNode<T>* node)
 
 int main() {	
 
-	LinkedBinaryTree<int, BinaryTreeIterator<int>> myTree(10);
+	LinkedBinaryTree<int, BinaryTreeIterator<int>> myTree(13);
 
-	myTree.insertItem(5, myTree.root(), myTree.parent(myTree.root()) );
-	myTree.insertItem(15, myTree.root(), myTree.parent(myTree.root()) );
-	myTree.insertItem(25, myTree.root(), myTree.parent(myTree.root()) );
-	myTree.insertItem(35, myTree.root(), myTree.parent(myTree.root()) );
+	myTree.insertItem(10, myTree.root(), myTree.parent(myTree.root()));
+	myTree.insertItem(1, myTree.root(), myTree.parent(myTree.root()));
+	myTree.insertItem(12, myTree.root(), myTree.parent(myTree.root()));
+	myTree.insertItem(11, myTree.root(), myTree.parent(myTree.root()));
+	myTree.insertItem(15, myTree.root(), myTree.parent(myTree.root()));
+	myTree.insertItem(13, myTree.root(), myTree.parent(myTree.root()));
+	myTree.insertItem(17, myTree.root(), myTree.parent(myTree.root()));
+	myTree.insertItem(21, myTree.root(), myTree.parent(myTree.root()));
+	myTree.insertItem(18, myTree.root(), myTree.parent(myTree.root()));
     
 	//Lab 6: Uncomment below to test your solution to depth()...
 	BinaryTreeIterator<int> iter = myTree.root();
 	
-	//iter.downRight();
+	iter.downRight();
 	//iter.downRight();
 	//iter.downRight();
 	
@@ -93,10 +98,13 @@ int main() {
 
 	//std::cout << "Minimum Value: " << *minimumVal<< std::endl;
 	//binaryPreorder<BinaryTreeIterator<float>>(myTree.root().node());
-   // postOrder(myTree.root().node());
+    //postOrder(myTree.root().node());
 	//binaryPreorder(myTree.root());
-	inOrder(myTree.root().node());
+	//inOrder(myTree.root().node());
+	std::cout << myTree.height(myTree.root()) << std::endl;
 
+	
+	
 	system("PAUSE");
 	
 }

@@ -7,8 +7,8 @@ template <typename T, typename Iterator> class SimpleTree;
 template <typename T, typename Iterator>
 class BinaryTree : public SimpleTree<T, Iterator> {
 public:       
-    virtual Iterator & leftChild(Iterator & position) const = 0;
-    virtual Iterator & rightChild(Iterator & position) const = 0;
+    virtual Iterator leftChild(Iterator position) const = 0;
+    virtual Iterator rightChild(Iterator position) const = 0;
 };
 
 #include "SimpleTree.h"

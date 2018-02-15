@@ -35,9 +35,10 @@ public:
     virtual void replace(Iterator & position, T element);
     
     // BinaryTree functions
-    virtual Iterator & leftChild(Iterator & position) const;
-    virtual Iterator & rightChild(Iterator & position) const;
+    virtual Iterator leftChild(Iterator position) const;
+    virtual Iterator rightChild(Iterator position) const;
 	virtual int depth(Iterator position) const;
+	virtual int height(Iterator position) const;
 	virtual int depthNonRecursive(Iterator position) const;
 	Iterator treeMinimum(Iterator & n) const;
    
@@ -123,7 +124,7 @@ bool LinkedBinaryTree<T, Iterator>::isRoot(Iterator & position) const {
 }
 
 template <typename T, typename Iterator>
-Iterator & LinkedBinaryTree<T, Iterator>::leftChild(Iterator & position) const {    	
+Iterator LinkedBinaryTree<T, Iterator>::leftChild(Iterator position) const {    	
 	Iterator & iter = position;
 	if ( position.node() != 0 ) {
 		iter = position.node()->leftChild();
@@ -142,6 +143,41 @@ int  LinkedBinaryTree<T, Iterator>::depth(Iterator position) const {
 	{
 		return(1 + depth(parent(position)));
 	}
+	
+}
+
+template <typename T, typename Iterator>
+int  LinkedBinaryTree<T, Iterator>::height(Iterator position) const {
+
+	int x = 0;
+	int y = 0;
+
+	if (this->isInternal(position)) {
+		
+		if (position.node()->leftChild().node() != nullptr)
+		{
+			x = height(leftChild(position));
+		}
+		if (position.node()->rightChild().node() != nullptr)
+		{
+			y = height(rightChild(position));
+		}
+		
+		if (x > y)
+		{
+			return x + 1;
+		}
+
+		else if (y > x)
+		{
+			return y + 1;
+		}
+		else
+		{
+			return x + 1;
+		}
+	}
+	return 0;
 	
 }
 
@@ -171,7 +207,7 @@ inline  Iterator LinkedBinaryTree<T, Iterator>::treeMinimum(Iterator & n) const 
 }
 
 template <typename T, typename Iterator>
-Iterator & LinkedBinaryTree<T, Iterator>::rightChild(Iterator & position) const {    
+Iterator LinkedBinaryTree<T, Iterator>::rightChild(Iterator position) const {    
     Iterator & iter = position;
 	if ( position.node() != 0 ) {
 		iter = position.node()->rightChild();

@@ -16,6 +16,7 @@ public:
 	virtual int depthNonRecursive(Iterator position) const = 0;
 	virtual void swap(Iterator & first, Iterator & second) = 0;
 	virtual void replace(Iterator & position, T element) = 0;    
+	virtual int height(Iterator position) const = 0;
 };
 
 #include "Container.h"
